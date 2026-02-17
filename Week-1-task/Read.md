@@ -1,7 +1,7 @@
 # Week-1 Task - Netflix Content Strategy Analyzer
 
-## Name: Karthik  
-## Branch: karthik-week1  
+## Name: Dheeraj Jayaraj
+## Branch: Dheeraj-week1  
 
 ### Objective
 This task focuses on loading and preprocessing the Netflix Movies and TV Shows dataset. The goal is to clean the dataset and prepare it for exploratory data analysis.
