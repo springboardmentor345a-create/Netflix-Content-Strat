@@ -10,8 +10,9 @@ This task focuses on loading and preprocessing the Netflix Movies and TV Shows d
 1. Loaded the Netflix dataset using pandas.
 2. Checked missing values and handled them.
 3. Removed duplicate records.
-4. Normalized categorical features such as type, country, rating, and genres(fixed up the format of each columns).
-5. Saved the cleaned dataset for further analysis.
+4. Handled inconsistent catagories
+5. Normalized categorical features such as type, country, rating, and genres(fixed up the format of each columns).
+6. Saved the cleaned dataset for further analysis.
 
 ### Tools Used
 - Python
