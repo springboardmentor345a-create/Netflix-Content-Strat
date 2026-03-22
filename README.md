@@ -75,15 +75,16 @@ Version Control	Git & GitHub
 🔄 Dashboard Development
 🔄 Deployment
 📈 Key Insights (Sample)
+
 📊 Results
-Clear segmentation of Netflix content
-Predictive model for content type
-Interactive dashboard for business insights
+  Clear segmentation of Netflix content
+  Predictive model for content type
+  Interactive dashboard for business insights
 🔮 Future Work
-Recommendation system
-Deep learning models
-Real-time data integration
-User personalization insights
-Movies dominate catalog, but TV shows are growing faster
+  Recommendation system
+  Deep learning models
+  Real-time data integration
+  User personalization insights
+  Movies dominate catalog, but TV shows are growing faster
 Certain genres dominate specific regions
 Ratings vary significantly across content types
