@@ -1,7 +1,17 @@
+from altair.datasets import url
 import streamlit as st
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
+import io
+import requests
+
+# Plotly is required for this dashboard. Provide a clear error when missing.
+try:
+    import plotly.express as px
+    import plotly.graph_objects as go
+except ModuleNotFoundError:
+    st.error("Missing dependency: plotly is required. Add `plotly` to requirements.txt and redeploy, or install with `pip install plotly`.")
+    st.stop()
+
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -19,7 +29,15 @@ st.markdown("Analyze Netflix's catalog, exploring content types, global distribu
 @st.cache_data # Cache the data to improve load times
 def load_data():
     # Replace with your actual dataset filename if different
-    df = pd.read_csv("Week-5-task/netflix_titles (1).csv")
+    
+
+    url = 'https://drive.google.com/uc?export=download&id=1uCSB6lS329wnOLrQCKHOj3ZxWYM6MGX-'
+    response = requests.get(url)
+    response.raise_for_status() # Raise an HTTPError for bad responses (4xx or 5xx)
+
+    # Decode content and load into DataFrame
+    content = response.content.decode('utf-8')
+    df = pd.read_csv(io.StringIO(content))
     
     # Clean data (handling nulls)
     df['country'] = df['country'].fillna('Unknown')
@@ -248,6 +266,39 @@ fig_trend = px.line(
     title="Movies vs TV Shows Released Over Time"
 )
 st.plotly_chart(fig_trend, width='stretch')
+
+# Insight 5: Top Genres per Year
+st.subheader("Top Genres Per Year")
+st.markdown("Discover which genre was most popular on Netflix content by year")
+# Get top genre per year from filtered data
+genre_per_year = filtered_df.copy()
+genre_per_year['genre_list'] = genre_per_year['listed_in'].str.split(', ')
+genre_per_year = genre_per_year.explode('genre_list')
+genre_per_year['genre_list'] = genre_per_year['genre_list'].str.strip()
+top_genres_by_year = genre_per_year.groupby(['release_year', 'genre_list']).size().reset_index(name='count')
+top_genres_by_year = top_genres_by_year.sort_values(['release_year', 'count'], ascending=[True, False])
+top_genres_by_year = top_genres_by_year[top_genres_by_year['release_year'] >= year_filter[0]]
+top_genres_by_year = top_genres_by_year[top_genres_by_year['release_year'] <= year_filter[1]]
+
+if len(top_genres_by_year) > 0:
+    # Get the most popular genre for each year (top genre per year)
+    top_genre_per_year = top_genres_by_year.groupby('release_year').first().reset_index()
+    
+    fig_genres_year = px.bar(
+        top_genre_per_year,
+        x='release_year',
+        y='count',
+        title="Most Popular Genre Per Year",
+        labels={'release_year': 'Release Year', 'count': 'Number of Titles', 'genre_list': 'Genre'},
+        color='genre_list',
+        text='genre_list'
+    )
+    fig_genres_year.update_traces(textposition='outside')
+    fig_genres_year.update_xaxes(title="Release Year")
+    fig_genres_year.update_yaxes(title="Number of Titles")
+    st.plotly_chart(fig_genres_year, width='stretch')
+else:
+    st.info("No data available for selected filters")
 
 st.divider()
 
