@@ -62,6 +62,19 @@ st.dataframe(filtered_df)
 
 st.markdown("---")
 
+# ---------- MOVIES VS TV SHOWS PIE ----------
+st.subheader("🎬 Movies vs TV Shows Distribution")
+
+type_counts = df['type'].value_counts().reset_index()
+type_counts.columns = ['Type', 'Count']
+
+fig = px.pie(
+    type_counts,
+    names='Type',
+    values='Count'
+)
+
+st.plotly_chart(fig, use_container_width=True)
 # ---------- TOP GENRES ----------
 st.subheader("🎭 Top Genres")
 
@@ -72,8 +85,7 @@ genre_counts.columns = ['Genre', 'Count']
 fig1 = px.bar(
     genre_counts,
     x='Genre',
-    y='Count',
-    color_discrete_sequence=['#E50914']
+    y='Count'
 )
 
 st.plotly_chart(fig1, use_container_width=True)
@@ -87,11 +99,20 @@ country_counts.columns = ['Country', 'Count']
 fig2 = px.bar(
     country_counts,
     x='Country',
-    y='Count',
-    color_discrete_sequence=['#E50914']
+    y='Count'
 )
 
 st.plotly_chart(fig2, use_container_width=True)
+
+#------Content by Country-------
+
+st.subheader("🌍 Content by Country")
+
+country_counts = df['country'].value_counts().head(10).reset_index()
+country_counts.columns = ['Country', 'Count']
+
+fig = px.pie(country_counts, names='Country', values='Count')
+st.plotly_chart(fig, use_container_width=True)
 
 # ---------- RATINGS ----------
 st.subheader("⭐ Ratings Distribution")
@@ -103,45 +124,10 @@ rating_counts.columns = ['Rating', 'Count']
 fig3 = px.bar(
     rating_counts,
     x='Rating',
-    y='Count',
-    color_discrete_sequence=['#E50914']
+    y='Count'
 )
 
 st.plotly_chart(fig3, use_container_width=True)
-
-# ---------- TOP GENRES PER YEAR ----------
-st.subheader("📅 Top Genres (Selected Year)")
-
-year_df = df[df['release_year'] == year]
-year_genres = year_df['listed_in'].str.split(',').explode().str.strip()
-
-year_genre_counts = year_genres.value_counts().head(10).reset_index()
-year_genre_counts.columns = ['Genre', 'Count']
-
-fig4 = px.bar(
-    year_genre_counts,
-    x='Genre',
-    y='Count',
-    color_discrete_sequence=['#E50914']
-)
-
-st.plotly_chart(fig4, use_container_width=True)
-
-# ---------- CONTENT TYPE BY COUNTRY ----------
-st.subheader("🎬 Content Type in Selected Country")
-
-country_df = df[df['country'] == country]
-type_counts = country_df['type'].value_counts().reset_index()
-type_counts.columns = ['Type', 'Count']
-
-fig5 = px.bar(
-    type_counts,
-    x='Type',
-    y='Count',
-    color_discrete_sequence=['#E50914']
-)
-
-st.plotly_chart(fig5, use_container_width=True)
 
 # ---------- CONTENT OVER TIME ----------
 st.subheader("📈 Content Added Over Years")
@@ -154,7 +140,12 @@ fig6 = px.line(
     x='Year',
     y='Count'
 )
-
-fig6.update_traces(line=dict(color='#E50914'))
-
 st.plotly_chart(fig6, use_container_width=True)
+#--------Movies vs TV Shows Over Time--------
+
+st.subheader("📈 Movies vs TV Shows Over Time")
+
+trend = df.groupby(['release_year', 'type']).size().reset_index(name='Count')
+
+fig = px.line(trend, x='release_year', y='Count', color='type')
+st.plotly_chart(fig, use_container_width=True)
