@@ -18,19 +18,19 @@ The dashboard helps understand how Netflix distributes content globally and what
 
 ---
 
-### 🔹 Content & Genre Analysis
+### 🔹 Trends & Ratings Analysis
 
 ![Content](images/Content.png)
 
 ---
 
-### 🔹 Trends & Ratings Analysis
+### 🔹 Country-wise Insights
 
 ![Trends](images/Country.png)
 
 ---
 
-### 🔹 Country-wise Insights
+### 🔹 Conclusion
 
 ![Country](images/Conclusion.png)
 
