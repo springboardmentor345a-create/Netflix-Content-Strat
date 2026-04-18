@@ -61,11 +61,3 @@ The dashboard helps understand how Netflix distributes content globally and what
 
 ---
 
-## ▶️ How to Use
-
-1. Download the `.pbix` file
-2. Open in **Power BI Desktop**
-3. Explore interactive dashboards and filters
-
----
-
