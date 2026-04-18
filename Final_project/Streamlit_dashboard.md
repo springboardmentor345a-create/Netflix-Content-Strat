@@ -12,7 +12,14 @@
 
 ## 📸 Dashboard Preview
 
-![Dashboard Preview](dashboard_preview.png)
+### 🔹 Overview Section  
+![Overview](images/Overview.png)
+
+### 🔹 Content Analysis  
+![Content](images/Content.png)
+
+### 🔹 Trends  
+![Trends](images/Trends.png)
 
 ---
 
